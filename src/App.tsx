@@ -12,6 +12,8 @@ export default function App() {
     const [rows, setRows] = useState<Array<string>>(['test']);
     const [extraLines, setExtraLines] = useState<Array<string>>([]);
     const [mode, setMode] = useState<'normal' | 'visual' | 'insert'>('normal');
+    const [cursorPos, setCursorPos] = useState<[number, number]>([0,0]); // row,idx
+    // TODO: cached cursor pos
 
     // INIT
     useEffect(() => {
@@ -42,8 +44,8 @@ export default function App() {
 
     return (<DevContainer>
         <VimContainer>
-            { rows.map((r, k) => <Line n={k+1} key={k} text={r} />)}
-            { extraLines.map((r, k) => <Line n={k - 100000} text={r} />)}
+            { rows.map((r, k) => <Line n={k+1} key={k} text={r} cursorPos={cursorPos} mode={mode} />)}
+            { extraLines.map((r, k) => <Line n={k - 100000} text={r} cursorPos={[-1,-1]} mode={mode} />)}
             <Powerline mode={mode} />
         </VimContainer>
 
