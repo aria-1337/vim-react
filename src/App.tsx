@@ -39,8 +39,29 @@ export default function App() {
             }
             return newMem;
         });
+
+        // HandleKeyPress
+        if (type === 'down') handleKeyPressDown(char);
+        else if (type === 'up') handleKeyPressUp(char);
     }, [char, type]);
 
+    function handleKeyPressDown(char: string) {
+        // Route to other modes
+        if (char === 'esc') {
+            setMode(() => 'normal');
+            return;
+        } else if (mode === 'normal' && char === 'i') {
+            setMode(() => 'insert');
+            return;
+        } else if (mode === 'normal' && char === 'v') {
+            setMode(() => 'visual');
+            return;
+        }
+    }
+
+    function handleKeyPressUp(char: string) {
+
+    }
 
     return (<DevContainer>
         <VimContainer>
