@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UseKeyPress from './hooks/UseKeypress';
 import Line from './components/Line';
+import Powerline from './components/Powerline';
 
 export default function App() {
     // PROPS FOR LATER
-    const minLines = 10;
+    const minLines = 10; // used to set the default editor height
 
-    // Storage
+    // Storage / App logic
     const [rows, setRows] = useState<Array<string>>(['test']);
     const [extraLines, setExtraLines] = useState<Array<string>>([]);
+    const [mode, setMode] = useState<'normal' | 'visual' | 'insert'>('normal');
 
     // INIT
     useEffect(() => {
@@ -37,10 +39,12 @@ export default function App() {
         });
     }, [char, type]);
 
+
     return (<DevContainer>
         <VimContainer>
             { rows.map((r, k) => <Line n={k+1} key={k} text={r} />)}
             { extraLines.map((r, k) => <Line n={k - 100000} text={r} />)}
+            <Powerline mode={mode} />
         </VimContainer>
 
         <DevDivider height="50px" />
